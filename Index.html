@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كاروسيل مشاريع الرؤية الحاسوبية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2a4d69);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            max-width: 800px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.85;
+            margin-bottom: 25px;
+        }
+        
+        .carousel-container {
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+        }
+        
+        .carousel {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+            height: 500px;
+        }
+        
+        .slide {
+            min-width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 40px;
+            background: rgba(25, 30, 50, 0.85);
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+        
+        .slide-content {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            z-index: 2;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            background: rgba(0, 150, 255, 0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        
+        .slide-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #4facfe;
+            text-align: center;
+        }
+        
+        .slide-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            flex-grow: 1;
+            text-align: justify;
+        }
+        
+        .slide-image {
+            height: 220px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            background: linear-gradient(45deg, #2c3e50, #4ca1af);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.7);
+            font-size: 1.5rem;
+        }
+        
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .tech-pill {
+            background: rgba(0, 150, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .indicators {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: #00f2fe;
+            transform: scale(1.2);
+        }
+        
+        .progress-bar {
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        
+        .progress {
+            height: 100%;
+            width: 25%;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+            margin-top: 20px;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.08);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.12);
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #00f2fe;
+        }
+        
+        @media (max-width: 768px) {
+            .carousel {
+                height: 550px;
+            }
+            
+            .slide {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            
+            .slide-description {
+                font-size: 1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>كاروسيل مشاريع الرؤية الحاسوبية</h1>
+        <p class="subtitle">تصفح أحدث مشاريع الرؤية الحاسوبية وتقنيات الذكاء الاصطناعي المتقدمة</p>
+    </header>
+    
+    <div class="carousel-container">
+        <div class="carousel">
+            <div class="slide">
+                <div class="slide-number">01</div>
+                <div class="slide-content">
+                    <h2 class="slide-title">كشف الأشياء في الوقت الحقيقي</h2>
+                    <p class="slide-description">
+                        نظام متطور للكشف عن الأشياء في الوقت الفعلي باستخدام خوارزميات YOLO (You Only Look Once). 
+                        يمكن هذا النظام من تحديد وتصنيف متعدد للأجسام في لقطات الفيديو المباشرة بدقة عالية وسرعة فائقة. 
+                        تم تطوير النظام باستخدام PyTorch وتحسينه للعمل على الأجهزة المحمولة.
+                    </p>
+                    <div class="slide-image">
+                        <i class="fas fa-object-group"></i> نموذج كشف الأشياء
+                    </div>
+                    <div class="technologies">
+                        <span class="tech-pill">PyTorch</span>
+                        <span class="tech-pill">OpenCV</span>
+                        <span class="tech-pill">YOLOv5</span>
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">CUDA</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-number">02</div>
+                <div class="slide-content">
+                    <h2 class="slide-title">تجزئة الصور الطبية</h2>
+                    <p class="slide-description">
+                        نموذج متقدم لتجزئة الصور الطبية باستخدام شبكات U-Net. تم تدريب النموذج على مجموعة بيانات واسعة من صور الأشعة المقطعية والرنين المغناطيسي لتحديد المناطق المصابة بدقة. 
+                        يساعد هذا النظام الأطباء في تشخيص الأمراض وتخطيط العلاج بشكل أكثر فعالية.
+                    </p>
+                    <div class="slide-image">
+                        <i class="fas fa-lungs"></i> تجزئة الصور الطبية
+                    </div>
+                    <div class="technologies">
+                        <span class="tech-pill">TensorFlow</span>
+                        <span class="tech-pill">U-Net</span>
+                        <span class="tech-pill">Keras</span>
+                        <span class="tech-pill">DICOM</span>
+                        <span class="tech-pill">NumPy</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-number">03</div>
+                <div class="slide-content">
+                    <h2 class="slide-title">تحليل المشاعر من تعابير الوجه</h2>
+                    <p class="slide-description">
+                        نظام لتحليل المشاعر الإنسانية من خلال تعابير الوجه باستخدام شبكات عصبية تلافيفية (CNN). 
+                        يمكن النظام من تحديد المشاعر الأساسية مثل السعادة والحزن والغبطة والغضب بدقة تصل إلى 94%. 
+                        تم تطوير النظام باستخدام TensorFlow وتكامل مع واجهات برمجة التطبيقات للاستخدام في تطبيقات الويب والجوال.
+                    </p>
+                    <div class="slide-image">
+                        <i class="fas fa-smile"></i> تحليل تعابير الوجه
+                    </div>
+                    <div class="technologies">
+                        <span class="tech-pill">TensorFlow</span>
+                        <span class="tech-pill">CNN</span>
+                        <span class="tech-pill">FER2013</span>
+                        <span class="tech-pill">Flask</span>
+                        <span class="tech-pill">OpenCV</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slide">
+                <div class="slide-number">04</div>
+                <div class="slide-content">
+                    <h2 class="slide-title">الملاحة الذاتية للمركبات</h2>
+                    <p class="slide-description">
+                        نظام متكامل للملاحة الذاتية للمركبات باستخدام الرؤية الحاسوبية والتعلم العميق. 
+                        يتضمن النظام كشف الممرات، وتحديد العوائق، وتجنب الاصطدام، واتخاذ القرارات في الوقت الحقيقي. 
+                        تم تطوير النظام باستخدام ROS (نظام تشغيل الروبوتات) ومكتبات الرؤية الحاسوبية المتقدمة.
+                    </p>
+                    <div class="slide-image">
+                        <i class="fas fa-car"></i> نظام الملاحة الذاتية
+                    </div>
+                    <div class="technologies">
+                        <span class="tech-pill">ROS</span>
+                        <span class="tech-pill">LiDAR</span>
+                        <span class="tech-pill">Point Cloud</span>
+                        <span class="tech-pill">Python</span>
+                        <span class="tech-pill">C++</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        
+        <div class="carousel-controls">
+            <button class="btn prev-btn">
+                <i class="fas fa-arrow-right"></i> السابق
+            </button>
+            <button class="btn next-btn">
+                التالي <i class="fas fa-arrow-left"></i>
+            </button>
+        </div>
+        
+        <div class="indicators"></div>
+    </div>
+    
+    <div class="features">
+        <div class="feature-card">
+            <i class="fas fa-brain"></i>
+            <h3 class="feature-title">نماذج متقدمة</h3>
+            <p>استخدام أحدث نماذج التعلم العميق في الرؤية الحاسوبية</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-bolt"></i>
+            <h3 class="feature-title">سرعة فائقة</h3>
+            <p>معالجة الصور والفيديو في الوقت الحقيقي</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-chart-line"></i>
+            <h3 class="feature-title">دقة عالية</h3>
+            <p>نتائج دقيقة بفضل نماذج التدريب المتقدمة</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-mobile-alt"></i>
+            <h3 class="feature-title">تطبيقات عملية</h3>
+            <p>حلول قابلة للتطبيق في مختلف المجالات</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.carousel');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.querySelector('.prev-btn');
+            const nextBtn = document.querySelector('.next-btn');
+            const progress = document.querySelector('.progress');
+            const indicatorsContainer = document.querySelector('.indicators');
+            
+            let currentIndex = 0;
+            const slideCount = slides.length;
+            
+            // Create indicators
+            slides.forEach((_, index) => {
+                const indicator = document.createElement('div');
+                indicator.classList.add('indicator');
+                if (index === 0) indicator.classList.add('active');
+                indicator.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                indicatorsContainer.appendChild(indicator);
+            });
+            
+            const indicators = document.querySelectorAll('.indicator');
+            
+            function updateCarousel() {
+                carousel.style.transform = `translateX(${-currentIndex * 100}%)`;
+                updateIndicators();
+                updateProgress();
+            }
+            
+            function updateIndicators() {
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            function updateProgress() {
+                progress.style.width = `${((currentIndex + 1) / slideCount) * 100}%`;
+            }
+            
+            function goToSlide(index) {
+                currentIndex = index;
+                if (currentIndex >= slideCount) currentIndex = 0;
+                if (currentIndex < 0) currentIndex = slideCount - 1;
+                updateCarousel();
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateCarousel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateCarousel();
+            }
+            
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Auto-advance carousel
+            let autoSlide = setInterval(nextSlide, 5000);
+            
+            // Pause auto-slide on hover
+            carousel.addEventListener('mouseenter', () => {
+                clearInterval(autoSlide);
+            });
+            
+            carousel.addEventListener('mouseleave', () => {
+                autoSlide = setInterval(nextSlide, 5000);
+            });
+            
+            // Initialize progress bar
+            updateProgress();
+        });
+    </script>
+</body>
+</html>
